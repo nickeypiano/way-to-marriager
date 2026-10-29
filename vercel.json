@@ -11,7 +11,10 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
     }
   ],
-  "redirects": [
-    { "source": "/index", "destination": "/", "permanent": true }
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
   ]
 }
