@@ -53,6 +53,44 @@
       onScroll();
     }
 
+    // Gentle reveal: photos and cards rise in once as they scroll into view
+    window.__reveal = true;
+    var targets = document.querySelectorAll('.feature > *, .item, .guide article, .boxes figure, .guide-card');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      targets.forEach(function (el) {
+        // small stagger between neighbours in the same grid row
+        var sibs = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+        el.style.transitionDelay = (sibs % 4) * 90 + 'ms';
+        io.observe(el);
+      });
+    } else {
+      targets.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    // 文定準備清單: remember ticks on this device
+    var boxes = document.querySelectorAll('.checklist input[type=checkbox]');
+    if (boxes.length) {
+      var KEY = 'wtm-checklist';
+      var saved = {};
+      try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+      var count = document.getElementById('check-count');
+      var update = function () {
+        var done = 0, state = {};
+        boxes.forEach(function (b) { if (b.checked) { done++; state[b.dataset.key] = 1; } });
+        if (count) count.textContent = '已完成 ' + done + ' / ' + boxes.length + ' 項';
+        try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+      };
+      boxes.forEach(function (b) { b.checked = !!saved[b.dataset.key]; b.addEventListener('change', update); });
+      var reset = document.getElementById('check-reset');
+      if (reset) reset.addEventListener('click', function () { boxes.forEach(function (b) { b.checked = false; }); update(); });
+      update();
+    }
+
     // Gold gallery thumbnails
     document.querySelectorAll('.gallery').forEach(function (gal) {
       var main = gal.querySelector('.main');
