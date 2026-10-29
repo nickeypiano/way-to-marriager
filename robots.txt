@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.way-to-marriage.com/sitemap.xml
