@@ -11,7 +11,7 @@
 | /ritual | ritual.html（文定與迎娶） |
 | /line-thanks | line-thanks.html（回報 Google Ads 轉換後跳到 LINE） |
 
-所有「LINE 預約諮詢」按鈕都會先到 /line-thanks，再跳到 https://lin.ee/QhKamjT。
+所有「LINE 詢問檔期」按鈕都會先到 /line-thanks，再跳到 https://lin.ee/QhKamjT。
 
 ## 常改的地方
 - **追蹤碼、LINE 連結**：只改 `assets/config.js`（已填入 GA4 評估 ID `G-GYFBH1GLT5`；Google Ads 的「聯絡人」轉換就是 GA4 記錄到的 /line-thanks 網頁載入，網址不能改）
