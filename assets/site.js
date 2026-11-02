@@ -17,6 +17,20 @@
     if (S.googleAdsId) gtag('config', S.googleAdsId);
   }
 
+  // Meta Pixel: PageView on every page; Lead is sent on /line-thanks below
+  var metaReady = null;
+  if (S.metaPixelId) {
+    (function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+      t = b.createElement(e); t.async = !0; t.src = v;
+      s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+      metaReady = t;
+    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', S.metaPixelId);
+    fbq('track', 'PageView');
+  }
+
   // Opening a page (e.g. from the footer links) always starts at the top,
   // unless the link points to a section like #faq
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -109,18 +123,29 @@
       go.href = url;
       var done = false;
       var leave = function () { if (!done) { done = true; window.location.replace(url); } };
-      var waits = 0;
-      var report = function () { if (waits === 0) setTimeout(leave, 400); };
+      // Go to LINE once every tracker has reported (or after 1.5 s at most)
+      var pending = 0;
+      var finish = function () { pending--; if (pending <= 0) leave(); };
       if (S.gaId) {
         // GA4 page view of /line-thanks = the 「聯絡人」 conversion in Google Ads
-        waits++;
-        gtag('event', 'page_view', { send_to: S.gaId, event_callback: leave });
+        pending++;
+        gtag('event', 'page_view', { send_to: S.gaId, event_callback: finish });
       }
       if (S.googleAdsId && S.lineConversionLabel) {
-        waits++;
-        gtag('event', 'conversion', { send_to: S.googleAdsId + '/' + S.lineConversionLabel, event_callback: leave });
+        pending++;
+        gtag('event', 'conversion', { send_to: S.googleAdsId + '/' + S.lineConversionLabel, event_callback: finish });
       }
-      if (waits) setTimeout(leave, 1500); else report();
+      if (S.metaPixelId && window.fbq) {
+        // Meta Lead = the 「加 LINE」 conversion for IG / FB ads
+        pending++;
+        fbq('track', 'Lead');
+        var metaSent = false;
+        var metaDone = function () { if (!metaSent) { metaSent = true; setTimeout(finish, 300); } };
+        if (window.fbq.version && window.fbq.callMethod) metaDone();
+        else if (metaReady) metaReady.addEventListener('load', metaDone);
+        else metaDone();
+      }
+      if (pending) setTimeout(leave, 1500); else setTimeout(leave, 400);
     }
   });
 })();

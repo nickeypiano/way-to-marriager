@@ -9,5 +9,9 @@ window.SITE = {
 
   // （選填）Google Ads 代碼 ID，格式像 'AW-123456789'。目前用不到，留空即可。
   googleAdsId: '',
-  lineConversionLabel: ''
+  lineConversionLabel: '',
+
+  // Meta 像素（資料集「成家路上 官網」，商家資產管理組合：成家路上）
+  // 每頁送 PageView；/line-thanks 送 Lead = IG／FB 廣告的「加 LINE」轉換
+  metaPixelId: '1146626684982358'
 };
