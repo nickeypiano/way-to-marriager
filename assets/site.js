@@ -105,7 +105,7 @@
     // LINE redirect page: report conversion, then go to LINE
     var go = document.getElementById('line-go');
     if (go) {
-      var url = S.lineUrl || 'https://lin.ee/QhKamjT';
+      var url = S.lineUrl || 'https://lin.ee/v7WsTke';
       go.href = url;
       var done = false;
       var leave = function () { if (!done) { done = true; window.location.replace(url); } };
