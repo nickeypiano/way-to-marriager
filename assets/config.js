@@ -11,7 +11,9 @@ window.SITE = {
   googleAdsId: '',
   lineConversionLabel: '',
 
-  // Meta 像素（資料集「成家路上 官網」，商家資產管理組合：成家路上）
-  // 每頁送 PageView；/line-thanks 送 Lead = IG／FB 廣告的「加 LINE」轉換
-  metaPixelId: '1146626684982358'
+  // Meta 像素：每頁送 PageView；/line-thanks 送 Lead = IG／FB 廣告的「加 LINE」轉換
+  // 1146626684982358 = 資料集「成家路上 官網」（商家資產管理組合：成家路上）
+  // 2167491760470159 = 像素「成家路上 官網（廣告帳號）」（目前投放廣告用的廣告帳號 119521064803943）
+  metaPixelId: '1146626684982358',
+  metaPixelIds: ['1146626684982358', '2167491760470159']
 };

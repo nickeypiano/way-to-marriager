@@ -27,7 +27,7 @@
       s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
       metaReady = t;
     })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', S.metaPixelId);
+    (S.metaPixelIds && S.metaPixelIds.length ? S.metaPixelIds : [S.metaPixelId]).forEach(function (id) { fbq('init', id); });
     fbq('track', 'PageView');
   }
 
