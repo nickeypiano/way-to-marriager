@@ -532,3 +532,41 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .combo-2 .combo-card .row h3 { font-size: 16px; font-weight: 500; letter-spacing: 1px; line-height: 1.8; }
 .combo-2 .combo-card { gap: 8px; }
 
+
+/* ---------- 限時活動（橫幅＋首頁區塊），期間由 data-start / data-end 控制 ---------- */
+.promo-bar[hidden], .promo[hidden] { display: none !important; }
+.promo-bar {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 6px;
+  background: var(--wine-dark); color: var(--gold-light); text-decoration: none;
+  font-size: 13px; letter-spacing: 2px; line-height: 1.5; padding: 9px 16px; text-align: center;
+}
+.promo-bar:hover { color: #fff; }
+.promo-bar span:first-child { font-family: var(--serif); font-weight: 600; }
+
+.promo { background: var(--ground-2); padding: 96px 0; }
+.promo-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 72px; }
+.promo-img { flex: 1 1 400px; min-width: 0; max-width: 500px; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.promo-text { flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.promo-text h2 { font-size: 36px; letter-spacing: 8px; color: var(--wine); }
+.promo-date { font-family: var(--serif); font-size: 16px; letter-spacing: 3px; color: var(--ink-3); }
+.promo-text .rule { margin: 10px 0 6px; }
+.promo-cond { font-size: 15px; letter-spacing: 2px; color: var(--gold-text); }
+.promo-gift { font-family: var(--serif); font-weight: 600; font-size: 30px; letter-spacing: 5px; color: var(--ink); line-height: 1.5; }
+.promo-value { font-family: var(--serif); font-size: 16px; letter-spacing: 3px; color: var(--ink-2); }
+.promo-value span { padding: 0 10px; color: var(--gold); }
+.promo-text .body-text { max-width: 440px; padding-top: 8px; text-wrap: pretty; }
+.promo-actions { padding-top: 14px; }
+.promo-note { font-size: 12px; letter-spacing: 2px; color: var(--ink-3); }
+
+@media (max-width: 760px) {
+  .promo-bar { font-size: 12px; letter-spacing: 1px; padding: 8px 12px; }
+  .promo-bar-sep { display: none; }
+  .promo { padding: 0 0 56px; }
+  .promo-inner { padding: 0; gap: 32px; flex-direction: column; align-items: stretch; }
+  .promo-img { max-width: none; flex: none; aspect-ratio: 1 / 1; object-position: 50% 70%; }
+  .promo-text { flex: none; width: 100%; align-items: center; text-align: center; padding: 0 24px; gap: 12px; }
+  .promo-text h2 { font-size: 28px; letter-spacing: 6px; }
+  .promo-gift { font-size: 25px; letter-spacing: 3px; }
+  .promo-text .body-text { font-size: 14px; }
+  .promo-actions { display: none; }
+}
