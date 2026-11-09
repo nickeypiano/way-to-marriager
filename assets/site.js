@@ -3,9 +3,14 @@
 
   // Google tag (gtag.js): GA4 + optional Google Ads
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function () { window.dataLayer.push(arguments); };
   var isLinePage = /\/line-thanks(\.html)?\/?$/.test(location.pathname);
-  var firstId = S.gaId || S.googleAdsId;
+  if (window.__gaInline) {
+    // The home page loads gtag.js and configures GA4 inline in <head> (Search Console verification);
+    // only add Google Ads here so GA4 is not loaded or counted twice
+    if (S.googleAdsId) gtag('config', S.googleAdsId);
+  }
+  if (!window.gtag) window.gtag = function () { window.dataLayer.push(arguments); };
+  var firstId = window.__gaInline ? null : (S.gaId || S.googleAdsId);
   if (firstId) {
     var g = document.createElement('script');
     g.async = true;

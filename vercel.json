@@ -27,11 +27,5 @@
       "destination": "/",
       "permanent": true
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/google5f4f3f8713aeb225.html",
-      "destination": "/google-site-verification.txt"
-    }
   ]
 }
